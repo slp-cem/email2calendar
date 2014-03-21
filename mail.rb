@@ -20,7 +20,11 @@ p slp_mails.last.uid
 @slp_mails = slp_mails
 
 def read(mail)
-  mail.body.to_s.encode("utf-8", mail.charset)  unless mail.multipart?
+  unless mail.multipart?
+    mail.body.to_s.encode("utf-8", mail.charset)
+  else
+    mail.text_part.decoded
+  end
 end
 
 
